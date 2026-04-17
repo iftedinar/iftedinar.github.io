@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iftekhar Dinar | Finance & Data Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #112240;
+    --navy-light: #1d3461;
+    --gold: #c9a84c;
+    --gold-light: #e8c97e;
+    --cream: #f5f0e8;
+    --cream-dark: #e8e0d0;
+    --white: #ffffff;
+    --text-muted: #8a9ab5;
+    --accent: #4fc3f7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ===== NAVIGATION ===== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 1.2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 22, 40, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--gold);
+    transition: all 0.3s;
+  }
+
+  /* ===== SECTIONS ===== */
+  section {
+    display: none;
+    min-height: 100vh;
+    padding: 7rem 0 4rem;
+    animation: fadeIn 0.5s ease;
+  }
+
+  section.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2.5rem;
+  }
+
+  /* ===== SECTION HEADERS ===== */
+  .section-header {
+    margin-bottom: 4rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    display: inline-block;
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.15;
+  }
+
+  /* ===== HERO ===== */
+  #home {
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    padding-top: 80px;
+  }
+
+  #home.active { display: flex; }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 70% 40%, rgba(201, 168, 76, 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(79, 195, 247, 0.05) 0%, transparent 60%);
+  }
+
+  .hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201, 168, 76, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201, 168, 76, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-text .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: slideUp 0.7s ease 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: slideUp 0.7s ease 0.4s forwards;
+  }
+
+  .hero-name span { color: var(--gold); }
+
+  .hero-tagline {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    max-width: 480px;
+    opacity: 0;
+    animation: slideUp 0.7s ease 0.6s forwards;
+  }
+
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: slideUp 0.7s ease 0.7s forwards;
+  }
+
+  .pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgba(201, 168, 76, 0.35);
+    border-radius: 2px;
+    color: var(--gold-light);
+    background: rgba(201, 168, 76, 0.05);
+    text-transform: uppercase;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1.2rem;
+    opacity: 0;
+    animation: slideUp 0.7s ease 0.9s forwards;
+  }
+
+  .btn-primary {
+    padding: 0.85rem 2rem;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--cream);
+    border: 1px solid rgba(245, 240, 232, 0.3);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .hero-photo-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    opacity: 0;
+    animation: slideUp 0.7s ease 0.5s forwards;
+  }
+
+  .hero-photo-frame {
+    position: relative;
+    width: 340px;
+    height: 400px;
+  }
+
+  .hero-photo-frame::before {
+    content: '';
+    position: absolute;
+    top: -12px; left: -12px;
+    right: 12px; bottom: 12px;
+    border: 2px solid var(--gold);
+    opacity: 0.4;
+    z-index: 0;
+  }
+
+  .hero-photo-frame::after {
+    content: '';
+    position: absolute;
+    top: 12px; left: 12px;
+    right: -12px; bottom: -12px;
+    background: var(--gold);
+    opacity: 0.08;
+    z-index: 0;
+  }
+
+  .hero-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    position: relative;
+    z-index: 1;
+    filter: grayscale(15%) contrast(1.05);
+  }
+
+  .hero-stats {
+    position: absolute;
+    bottom: -20px;
+    right: -30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(201, 168, 76, 0.2);
+    z-index: 2;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+  }
+
+  .stat-box {
+    background: var(--navy-mid);
+    padding: 1rem 1.2rem;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-top: 0.3rem;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== ABOUT STRIP ===== */
+  .about-strip {
+    margin-top: 5rem;
+    padding: 2rem 0;
+    border-top: 1px solid rgba(201, 168, 76, 0.15);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .strip-item .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .strip-item p { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+  /* ===== EXPERIENCE PAGE ===== */
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 3rem 2.5rem;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.15);
+  }
+
+  .timeline-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .timeline-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    background: rgba(201, 168, 76, 0.1);
+    padding: 0.3rem 0.7rem;
+    border: 1px solid rgba(201, 168, 76, 0.2);
+  }
+
+  .timeline-location {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  .timeline-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+
+  .timeline-company {
+    font-size: 0.9rem;
+    color: var(--gold-light);
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .timeline-duties {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .timeline-duties li {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .timeline-duties li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.7rem;
+    top: 0.1rem;
+  }
+
+  /* ===== SKILLS BAR ===== */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 2rem;
+  }
+
+  .skill-group h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+  }
+
+  .skill-item {
+    margin-bottom: 1rem;
+  }
+
+  .skill-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+  }
+
+  .skill-name { font-size: 0.85rem; color: var(--cream); }
+  .skill-pct { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--gold); }
+
+  .skill-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .skill-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 1px;
+    transition: width 1.5s ease;
+  }
+
+  /* ===== PROJECTS ===== */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201, 168, 76, 0.12);
+    padding: 2rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .project-card:hover { border-color: rgba(201, 168, 76, 0.35); transform: translateY(-4px); }
+  .project-card:hover::before { opacity: 1; }
+
+  .project-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .project-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 1.2rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 0.25rem 0.6rem;
+    background: rgba(79, 195, 247, 0.08);
+    border: 1px solid rgba(79, 195, 247, 0.2);
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201, 168, 76, 0.12);
+    padding: 2rem;
+    position: relative;
+  }
+
+  .quote-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    color: var(--gold);
+    opacity: 0.15;
+    line-height: 1;
+    margin-bottom: -1.5rem;
+    display: block;
+  }
+
+  .testimonial-text {
+    font-size: 0.9rem;
+    color: var(--cream-dark);
+    line-height: 1.75;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .author-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--navy-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--navy);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .author-name { font-size: 0.9rem; font-weight: 600; color: var(--white); }
+  .author-title { font-size: 0.75rem; color: var(--text-muted); }
+
+  /* ===== ACHIEVEMENTS ===== */
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .achievement-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201, 168, 76, 0.12);
+    padding: 1.8rem;
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    transition: all 0.3s;
+  }
+
+  .achievement-card:hover { border-color: rgba(201, 168, 76, 0.35); }
+
+  .ach-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(201, 168, 76, 0.1);
+    border: 1px solid rgba(201, 168, 76, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .ach-title { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
+  .ach-sub { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+  /* Certs */
+  .certs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  .cert-card {
+    background: var(--navy-light);
+    border: 1px solid rgba(201, 168, 76, 0.1);
+    padding: 1.3rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: all 0.3s;
+  }
+
+  .cert-card:hover { border-color: rgba(201, 168, 76, 0.3); }
+
+  .cert-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .cert-name { font-size: 0.85rem; color: var(--cream); line-height: 1.4; }
+  .cert-issuer { font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+  /* ===== CONTACT ===== */
+  .contact-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .contact-info p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--cream-dark);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .contact-link:hover { color: var(--gold); }
+
+  .contact-link .icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(201, 168, 76, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+  .form-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .form-input, .form-textarea {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201, 168, 76, 0.2);
+    padding: 0.85rem 1rem;
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+    width: 100%;
+  }
+
+  .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-textarea { resize: vertical; min-height: 140px; }
+
+  /* ===== EDUCATION ===== */
+  .edu-cards { display: flex; flex-direction: column; gap: 1.5rem; }
+
+  .edu-card {
+    background: var(--navy-mid);
+    border: 1px solid rgba(201, 168, 76, 0.12);
+    padding: 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+  }
+
+  .edu-year {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    white-space: nowrap;
+    padding-top: 0.2rem;
+  }
+
+  .edu-degree {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+
+  .edu-school { font-size: 0.9rem; color: var(--gold-light); margin-bottom: 0.5rem; }
+  .edu-gpa { font-size: 0.82rem; color: var(--text-muted); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid rgba(201, 168, 76, 0.1);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    margin-top: 3rem;
+  }
+
+  /* ===== SUB SECTION TITLE ===== */
+  .sub-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--gold-light);
+    margin: 3rem 0 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--navy); padding: 1.5rem; gap: 1.2rem; border-bottom: 1px solid rgba(201,168,76,0.15); }
+    .nav-links.open { display: flex; }
+    .hamburger { display: flex; }
+    .hero-content { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-photo-wrap { order: -1; }
+    .hero-photo-frame { width: 260px; height: 310px; }
+    .hero-stats { right: 0; }
+    .about-strip { grid-template-columns: 1fr 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .contact-wrapper { grid-template-columns: 1fr; gap: 3rem; }
+    section { padding: 5rem 0 3rem; }
+    .container { padding: 0 1.5rem; }
+    .hero-actions { flex-direction: column; gap: 0.8rem; }
+    .btn-primary, .btn-outline { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a class="nav-logo" href="#" onclick="showSection('home')">ID.</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a onclick="showSection('home')" class="active">Home</a></li>
+    <li><a onclick="showSection('experience')">Experience</a></li>
+    <li><a onclick="showSection('projects')">Projects</a></li>
+    <li><a onclick="showSection('testimonials')">Testimonials</a></li>
+    <li><a onclick="showSection('achievements')">Achievements</a></li>
+    <li><a onclick="showSection('others')">Others</a></li>
+    <li><a onclick="showSection('contact')">Contact</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===== HOME ===== -->
+<section id="home" class="active">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-text">
+        <p class="eyebrow">Finance · Data Analytics · Technology</p>
+        <h1 class="hero-name">Iftekhar<br><span>Dinar</span></h1>
+        <p class="hero-tagline">
+          A Finance & Data Analytics student at Missouri State University — bridging financial intelligence with data-driven insight to power smarter decisions.
+        </p>
+        <div class="hero-pills">
+          <span class="pill">Power BI</span>
+          <span class="pill">Python</span>
+          <span class="pill">Oracle Financials</span>
+          <span class="pill">Excel VBA</span>
+          <span class="pill">Tableau</span>
+          <span class="pill">Workday</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn-primary" onclick="showSection('contact')">Get In Touch</a>
+          <a class="btn-outline" onclick="showSection('experience')">View Experience</a>
+        </div>
+      </div>
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-frame">
+          <img src="https://raw.githubusercontent.com/placeholder/placeholder/main/placeholder.jpg"
+               onerror="this.style.display='none'; this.parentElement.querySelector('.photo-fallback').style.display='flex';"
+               class="hero-photo" alt="Iftekhar Dinar">
+          <div class="photo-fallback" style="display:none; width:100%; height:100%; background:linear-gradient(135deg,#1d3461,#0a1628); align-items:center; justify-content:center; position:relative; z-index:1;">
+            <span style="font-family:'Playfair Display',serif; font-size:6rem; color:var(--gold); opacity:0.5;">ID</span>
+          </div>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-box">
+            <div class="stat-num">3.78</div>
+            <div class="stat-label">GPA</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">8+</div>
+            <div class="stat-label">Roles</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">9</div>
+            <div class="stat-label">Certs</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">5</div>
+            <div class="stat-label">Languages</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-strip">
+      <div class="strip-item">
+        <div class="num">3+ yrs</div>
+        <p>Professional Experience</p>
+      </div>
+      <div class="strip-item">
+        <div class="num">5,000+</div>
+        <p>Students Supported</p>
+      </div>
+      <div class="strip-item">
+        <div class="num">17%</div>
+        <p>ROI on First Investment</p>
+      </div>
+      <div class="strip-item">
+        <div class="num">Dec '26</div>
+        <p>Expected Graduation</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXPERIENCE ===== -->
+<section id="experience">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Career Journey</p>
+      <h2 class="section-title">Work Experience</h2>
+    </div>
+
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Aug 2025 – Present</span>
+          <span class="timeline-location">📍 Springfield, MO</span>
+        </div>
+        <h3 class="timeline-role">Career Services Support</h3>
+        <p class="timeline-company">Missouri State University — Career Center</p>
+        <ul class="timeline-duties">
+          <li>Support 5,000+ enrolled students in the College of Business (91% graduation rate) with individualized resume, cover letter, CV, and mock interview feedback.</li>
+          <li>Conduct practice interviews across 27 undergraduate and 6 graduate programs; deliver career development presentations to 3+ classes (~150 students) per semester.</li>
+          <li>Assist in coordinating 233+ annual employer visits to career fairs and recruiting events.</li>
+          <li>Utilize Handshake to manage appointments, track Career Center events, and generate student reports; leverage OneDrive, Teams, and Outlook for collaboration.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Jun 2025 – Aug 2025</span>
+          <span class="timeline-location">📍 Springfield, MO</span>
+        </div>
+        <h3 class="timeline-role">Finance Intern</h3>
+        <p class="timeline-company">City Utilities of Springfield</p>
+        <ul class="timeline-duties">
+          <li>Prepared and managed 7+ weekly, 8–10 monthly, 8–10 quarterly, and 10+ annual payroll-related reports.</li>
+          <li>Performed journal entries, general ledger maintenance, and weekly tax filings contributing to accurate financial operations.</li>
+          <li>Utilized advanced Excel skills including macros, What-If Analysis, VLOOKUP, SUMIF, and pivot tables for financial modeling across large datasets.</li>
+          <li>Worked extensively in Workday during data transition and system implementation; navigated Oracle FIN PRD, PeopleSoft, Concur, and SharePoint.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Jun 2025 – Jul 2025</span>
+          <span class="timeline-location">📍 Springfield, MO</span>
+        </div>
+        <h3 class="timeline-role">Computer Service Technician</h3>
+        <p class="timeline-company">Missouri State University — IT Services</p>
+        <ul class="timeline-duties">
+          <li>Delivered technical support to students, faculty, and staff via phone, chat, remote access, and in-person interactions.</li>
+          <li>Troubleshot and resolved issues related to university systems, software, hardware, mobile devices, network connectivity, and peripherals.</li>
+          <li>Logged and tracked support activities using the university's IT work management system; created technical documentation and support guides.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Jun 2024 – Aug 2024</span>
+          <span class="timeline-location">📍 Dallas, TX</span>
+        </div>
+        <h3 class="timeline-role">Data Intern</h3>
+        <p class="timeline-company">RKD Group</p>
+        <ul class="timeline-duties">
+          <li>Ensured timely, accurate execution of data conversions through rigorous quality control checks.</li>
+          <li>Handled data analysis and conversion using internal software — transforming txt, dat, and comma-delimited files into database management systems.</li>
+          <li>Managed and verified extensive datasets tailored to client specifications, ensuring data accuracy and completeness.</li>
+          <li>Stayed current on security protocols through ongoing training, ensuring highest standards of data protection and compliance.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Aug 2023 – May 2025</span>
+          <span class="timeline-location">📍 Springfield, MO</span>
+        </div>
+        <h3 class="timeline-role">Building Manager</h3>
+        <p class="timeline-company">Missouri State University — Plaster Student Union</p>
+        <ul class="timeline-duties">
+          <li>Supervised and led a team of 15+ members including house crews, technicians, information desk workers, and games center attendants.</li>
+          <li>Coordinated setup, execution, and breakdown of numerous campus events; served as primary point of contact for event organizers.</li>
+          <li>Managed outside vendors including Chick-fil-A, Panda Express, and Freddy's; collaborated with university administration to optimize space utilization.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">May 2023 – Jul 2023</span>
+          <span class="timeline-location">📍 Austin, TX</span>
+        </div>
+        <h3 class="timeline-role">Social Media Manager / Office Assistant</h3>
+        <p class="timeline-company">St. Edward's University — University Operations</p>
+        <ul class="timeline-duties">
+          <li>Managed social media platforms (Twitter, Instagram, Facebook, TikTok) to enhance awareness about sustainability and green marketing policy.</li>
+          <li>Made data-driven decisions based on marketing analytics; provided administrative support to staff and students.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Feb 2023 – Jul 2023</span>
+          <span class="timeline-location">📍 Austin, TX</span>
+        </div>
+        <h3 class="timeline-role">Vice President</h3>
+        <p class="timeline-company">SEU Investment Club</p>
+        <ul class="timeline-duties">
+          <li>Established investment portfolio by analyzing company financial statements — achieved 17% profit on first investment.</li>
+          <li>Helped students analyze individual stocks and market trends; prepared bi-weekly newsletters on significant market news.</li>
+          <li>Built connections with professionals, alumni, and industry contacts.</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">May 2023 – Jun 2023</span>
+          <span class="timeline-location">📍 Austin, TX</span>
+        </div>
+        <h3 class="timeline-role">Assistant Manager (Intern)</h3>
+        <p class="timeline-company">Microtel Inn & Suites by Wyndham</p>
+        <ul class="timeline-duties">
+          <li>Monitored hotel operations; maintained inventory and supervised 10+ staff members including front desk, housekeeping, and maintenance.</li>
+          <li>Assisted in financial management including budget monitoring, financial data analysis, and revenue management strategies.</li>
+          <li>Assisted 50+ guests daily; collaborated with food & beverage, events, and facilities management departments.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Education sub-section -->
+    <h2 class="sub-section-title">Education</h2>
+    <div class="edu-cards">
+      <div class="edu-card">
+        <div class="edu-year">2023 – Dec 2026</div>
+        <div>
+          <div class="edu-degree">B.S. in Data Analytics & B.S. in Finance</div>
+          <div class="edu-school">Missouri State University · Springfield, MO</div>
+          <div class="edu-gpa">GPA: 3.78/4.00 · Gamma Iota Sigma · FMA · FPA</div>
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-year">2022 – 2023</div>
+        <div>
+          <div class="edu-degree">B.B.A. in Business Administration & Management</div>
+          <div class="edu-school">St. Edward's University · Austin, TX</div>
+          <div class="edu-gpa">Dean's List · Freshman Student of the Year</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills sub-section -->
+    <h2 class="sub-section-title">Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Data & Analytics</h3>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Python</span><span class="skill-pct">80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Power BI</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Tableau</span><span class="skill-pct">80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Excel (VBA, Pivot Tables)</span><span class="skill-pct">92%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">MySQL / R</span><span class="skill-pct">75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Finance & Enterprise Systems</h3>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Oracle Financials Cloud</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Workday</span><span class="skill-pct">80%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">PeopleSoft</span><span class="skill-pct">75%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Financial Modeling</span><span class="skill-pct">88%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-top"><span class="skill-name">Financial Statement Analysis</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJECTS ===== -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Work & Research</p>
+      <h2 class="section-title">Projects & Articles</h2>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <div class="project-type">Finance · Data Analysis</div>
+        <h3 class="project-title">Payroll Reporting Automation — City Utilities</h3>
+        <p class="project-desc">Designed and maintained a suite of 35+ payroll-related reports (weekly, monthly, quarterly, annual) using advanced Excel techniques including macros and VBA to automate repetitive tasks, reducing manual effort significantly.</p>
+        <div class="project-tags">
+          <span class="tag">Excel VBA</span><span class="tag">Macros</span><span class="tag">Oracle</span><span class="tag">Workday</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-type">Data Management</div>
+        <h3 class="project-title">Large-Scale Data Conversion Pipeline — RKD Group</h3>
+        <p class="project-desc">Managed data conversion pipelines transforming raw txt, dat, and comma-delimited files into structured database systems for nonprofit clients, maintaining high-quality standards through rigorous QA/QC checks.</p>
+        <div class="project-tags">
+          <span class="tag">Database Mgmt</span><span class="tag">Data Cleaning</span><span class="tag">QA/QC</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-type">Investment Analysis</div>
+        <h3 class="project-title">Investment Portfolio Analysis — SEU Investment Club</h3>
+        <p class="project-desc">Built and managed an investment portfolio by conducting in-depth analysis of company financial statements, market trends, and sector research — achieving a 17% return on the first investment cycle.</p>
+        <div class="project-tags">
+          <span class="tag">Financial Analysis</span><span class="tag">Stock Research</span><span class="tag">Portfolio Mgmt</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-type">Business Intelligence</div>
+        <h3 class="project-title">BI Dashboard Development</h3>
+        <p class="project-desc">Developed interactive dashboards using Power BI and Tableau to visualize financial and operational data, enabling data-driven decision-making for stakeholders through clear, actionable visual reporting.</p>
+        <div class="project-tags">
+          <span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">Data Viz</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-type">Python · Finance</div>
+        <h3 class="project-title">Python for Financial Analysis</h3>
+        <p class="project-desc">Applied Python programming to financial datasets — performing statistical analysis, data cleaning, and exploratory data analysis to extract actionable insights from large financial datasets.</p>
+        <div class="project-tags">
+          <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Matplotlib</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-type">Career Development</div>
+        <h3 class="project-title">Career Readiness Program — MSU Career Center</h3>
+        <p class="project-desc">Developed and delivered structured career readiness curriculum reaching 150+ students per semester across 33 academic programs, covering resume optimization, LinkedIn strategy, interview preparation, and job search techniques.</p>
+        <div class="project-tags">
+          <span class="tag">Presentation</span><span class="tag">Coaching</span><span class="tag">Handshake</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 3rem; padding: 2rem; background: var(--navy-mid); border: 1px dashed rgba(201,168,76,0.25); text-align: center;">
+      <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.7;">
+        📌 <strong style="color:var(--gold-light);">Note:</strong> This section will be updated with detailed project write-ups, GitHub links, and published articles. 
+        Feel free to <a onclick="showSection('contact')" style="color:var(--gold); cursor:pointer; text-decoration:underline;">reach out</a> to learn more about specific projects.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section id="testimonials">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Social Proof</p>
+      <h2 class="section-title">What People Say</h2>
+    </div>
+
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">Iftekhar brought exceptional attention to detail and a proactive attitude to everything he touched during his internship. His ability to navigate complex enterprise systems while maintaining accuracy in high-volume financial reporting was impressive for a student.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">F</div>
+          <div>
+            <div class="author-name">Finance Team</div>
+            <div class="author-title">City Utilities of Springfield</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">Working with Iftekhar in the Career Center has been a real asset. He connects with students genuinely and offers feedback that is both practical and encouraging. Students leave their sessions with him feeling more confident and prepared.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">C</div>
+          <div>
+            <div class="author-name">Career Center Staff</div>
+            <div class="author-title">Missouri State University</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">Iftekhar handled our data conversion projects with professionalism and precision. He consistently met tight deadlines without sacrificing data quality. He's a pleasure to work with and a fast learner.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">R</div>
+          <div>
+            <div class="author-name">Data Management Team</div>
+            <div class="author-title">RKD Group, Dallas TX</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">As VP of our investment club, Iftekhar demonstrated a strong grasp of financial analysis and the ability to communicate complex concepts clearly to peers. His first portfolio move generated a 17% return — that speaks for itself.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">S</div>
+          <div>
+            <div class="author-name">Faculty Advisor</div>
+            <div class="author-title">SEU Investment Club</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <span class="quote-mark">"</span>
+        <p class="testimonial-text">Iftekhar was a dependable Building Manager who kept our facility running smoothly. He led his team with maturity beyond his years and managed complex event logistics without missing a beat.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">P</div>
+          <div>
+            <div class="author-name">Operations Leadership</div>
+            <div class="author-title">Plaster Student Union, MSU</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card" style="border: 1px dashed rgba(201,168,76,0.3); display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; gap:1rem;">
+        <div style="font-size:2rem;">✉️</div>
+        <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.7;">
+          Have worked with Iftekhar? <br>Share your experience — I'd love to feature it here.
+        </p>
+        <a onclick="showSection('contact')" style="cursor:pointer; color:var(--gold); font-size:0.85rem; text-decoration:underline;">Leave a Testimonial</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== ACHIEVEMENTS ===== -->
+<section id="achievements">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Recognition & Learning</p>
+      <h2 class="section-title">Achievements</h2>
+    </div>
+
+    <div class="achievements-grid">
+
+      <div class="achievement-card">
+        <div class="ach-icon">🏆</div>
+        <div>
+          <div class="ach-title">Freshman Student of the Year</div>
+          <div class="ach-sub">Recognized for outstanding academic performance and leadership during freshman year at St. Edward's University.</div>
+        </div>
+      </div>
+
+      <div class="achievement-card">
+        <div class="ach-icon">📋</div>
+        <div>
+          <div class="ach-title">Dean's List</div>
+          <div class="ach-sub">Earned Dean's List distinction multiple times, reflecting consistent academic excellence across institutions.</div>
+        </div>
+      </div>
+
+      <div class="achievement-card">
+        <div class="ach-icon">📈</div>
+        <div>
+          <div class="ach-title">17% Investment Return</div>
+          <div class="ach-sub">Achieved a 17% profit on the first investment as VP of SEU Investment Club through rigorous financial statement analysis.</div>
+        </div>
+      </div>
+
+      <div class="achievement-card">
+        <div class="ach-icon">🎓</div>
+        <div>
+          <div class="ach-title">3.78 GPA</div>
+          <div class="ach-sub">Maintaining a 3.78/4.00 GPA at Missouri State University while balancing multiple professional roles simultaneously.</div>
+        </div>
+      </div>
+
+      <div class="achievement-card">
+        <div class="ach-icon">🌐</div>
+        <div>
+          <div class="ach-title">Multilingual — 5 Languages</div>
+          <div class="ach-sub">Fluent in English and Bengali; proficient in Urdu and Hindi; elementary Spanish — enabling cross-cultural communication.</div>
+        </div>
+      </div>
+
+      <div class="achievement-card">
+        <div class="ach-icon">👥</div>
+        <div>
+          <div class="ach-title">5,000+ Students Supported</div>
+          <div class="ach-sub">Provided career counseling and coaching to thousands of business students as Career Services Support at MSU.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <h2 class="sub-section-title">Certifications</h2>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-dot"></div>
+        <div>
+          <div class="cert-name">Corporate Finance Foundations</div>
+          <div class="cert-issuer">LinkedIn Learning · NASBA CPE · 2.60 Credits · Nov 2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-dot"></div>
+        <div>
+          <div class="cert-name">Corporate Financial Statement Analysis</div>
+          <div class="cert-issuer">LinkedIn Learning · NASBA CPE · 2.60 Credits · Dec 2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-dot"></div>
+        <div>
+          <div class="cert-name">Data-Driven Product Management</div>
+          <div class="cert-issuer">LinkedIn Learning · NASBA CPE · 4.00 Credits · Nov 2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-dot"></div>
+        <div>
+          <div class="cert-name">Excel: Lookup Functions in Depth</div>
+          <div class="cert-issuer">LinkedIn Learning · Data Analysis · Oct 2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-dot"></div>
+        <div>
+          <div class="cert-name">Excel: Managing and Analyzing Data</div>
+          <div class="cert-issuer">LinkedIn Learning · PMI Provider · 1.0 PDU · Nov 2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-dot"></div>
+        <div>
+          <div class="cert-name">Financial Modeling & Forecasting Financial Statements</div>
+          <div class="cert-issuer">LinkedIn Learning · NASBA CPE · 3.20 Credits · Dec 2023</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-dot"></div>
+        <div>
+          <div class="cert-name">Getting Started with Python for Finance</div>
+          <div class="cert-issuer">LinkedIn Learning · NASBA CPE · 3.20 Credits · Oct 2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-dot"></div>
+        <div>
+          <div class="cert-name">Learning Excel: Data Analysis</div>
+          <div class="cert-issuer">LinkedIn Learning · 3h 41m · Dec 2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-dot"></div>
+        <div>
+          <div class="cert-name">Understanding Capital Markets (2019)</div>
+          <div class="cert-issuer">LinkedIn Learning · NASBA CPE · 5.40 Credits · Dec 2025</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-dot"></div>
+        <div>
+          <div class="cert-name">Successful Negotiation: Essential Strategies and Skills</div>
+          <div class="cert-issuer">LinkedIn Learning</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-dot"></div>
+        <div>
+          <div class="cert-name">Digital Transformation Specialist</div>
+          <div class="cert-issuer">Professional Certification</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OTHERS ===== -->
+<section id="others">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Beyond the Resume</p>
+      <h2 class="section-title">Other Interests & Activities</h2>
+    </div>
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap:1.5rem; margin-bottom:3rem;">
+
+      <div class="achievement-card">
+        <div class="ach-icon">📊</div>
+        <div>
+          <div class="ach-title">Gamma Iota Sigma</div>
+          <div class="ach-sub">Active member of the international risk management, insurance, and actuarial science fraternity at Missouri State University.</div>
+        </div>
+      </div>
+
+      <div class="achievement-card">
+        <div class="ach-icon">💰</div>
+        <div>
+          <div class="ach-title">Financial Management Association</div>
+          <div class="ach-sub">Member of FMA, engaging with finance professionals and students to advance financial knowledge and career development.</div>
+        </div>
+      </div>
+
+      <div class="achievement-card">
+        <div class="ach-icon">📐</div>
+        <div>
+          <div class="ach-title">Financial Planning Association</div>
+          <div class="ach-sub">Active participant in FPA, learning about financial planning practices and building a professional network in the field.</div>
+        </div>
+      </div>
+
+      <div class="achievement-card">
+        <div class="ach-icon">🌍</div>
+        <div>
+          <div class="ach-title">International Student Perspective</div>
+          <div class="ach-sub">Brings a diverse, multicultural perspective shaped by experience across multiple countries and professional environments.</div>
+        </div>
+      </div>
+
+      <div class="achievement-card">
+        <div class="ach-icon">📖</div>
+        <div>
+          <div class="ach-title">Market Research & Investing</div>
+          <div class="ach-sub">Passionate about equity research, capital markets, and applying quantitative methods to real-world investment decisions.</div>
+        </div>
+      </div>
+
+      <div class="achievement-card">
+        <div class="ach-icon">🤝</div>
+        <div>
+          <div class="ach-title">Mentorship & Teaching</div>
+          <div class="ach-sub">Enjoys coaching peers and younger students — from career readiness to financial literacy and analytical skill-building.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <h2 class="sub-section-title">Languages</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:1rem;">
+      <div class="cert-card" style="min-width:160px;">
+        <div class="cert-dot"></div>
+        <div><div class="cert-name">English</div><div class="cert-issuer">Native / Bilingual</div></div>
+      </div>
+      <div class="cert-card" style="min-width:160px;">
+        <div class="cert-dot"></div>
+        <div><div class="cert-name">Bengali</div><div class="cert-issuer">Native / Bilingual</div></div>
+      </div>
+      <div class="cert-card" style="min-width:160px;">
+        <div class="cert-dot"></div>
+        <div><div class="cert-name">Urdu</div><div class="cert-issuer">Professional Working</div></div>
+      </div>
+      <div class="cert-card" style="min-width:160px;">
+        <div class="cert-dot"></div>
+        <div><div class="cert-name">Hindi</div><div class="cert-issuer">Limited Working</div></div>
+      </div>
+      <div class="cert-card" style="min-width:160px;">
+        <div class="cert-dot"></div>
+        <div><div class="cert-name">Spanish</div><div class="cert-issuer">Elementary</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-label">Let's Connect</p>
+      <h2 class="section-title">Get In Touch</h2>
+    </div>
+
+    <div class="contact-wrapper">
+      <div class="contact-info">
+        <h3>Open to Opportunities</h3>
+        <p>Whether you're a recruiter, fellow student, or professional looking to connect — I'd love to hear from you. I'm actively seeking full-time roles in Finance, Data Analytics, and Business Intelligence starting December 2026.</p>
+
+        <div class="contact-links">
+          <a href="mailto:iftekharifty42@gmail.com" class="contact-link">
+            <div class="icon">✉️</div>
+            <div>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.2rem;">Email</div>
+              iftekharifty42@gmail.com
+            </div>
+          </a>
+          <a href="tel:7866516521" class="contact-link">
+            <div class="icon">📱</div>
+            <div>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.2rem;">Phone</div>
+              786-651-6521
+            </div>
+          </a>
+          <a href="https://www.linkedin.com/in/iftekhardinar" target="_blank" class="contact-link">
+            <div class="icon">💼</div>
+            <div>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.2rem;">LinkedIn</div>
+              linkedin.com/in/iftekhardinar
+            </div>
+          </a>
+          <a class="contact-link">
+            <div class="icon">📍</div>
+            <div>
+              <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.2rem;">Location</div>
+              Springfield, Missouri, USA
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" class="form-input" placeholder="John Smith" id="cName">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="john@company.com" id="cEmail">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input type="text" class="form-input" placeholder="Job Opportunity / Collaboration / etc." id="cSubject">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" placeholder="Your message here..." id="cMessage"></textarea>
+          </div>
+          <button class="btn-primary" onclick="handleSubmit()" style="width:100%; text-align:center;">Send Message</button>
+          <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:0.5rem;">
+            Or email directly at <a href="mailto:iftekharifty42@gmail.com" style="color:var(--gold);">iftekharifty42@gmail.com</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Iftekhar Dinar · Built with passion · Springfield, Missouri</p>
+</footer>
+
+<script>
+  function showSection(id) {
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+
+    document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      if (a.getAttribute('onclick') && a.getAttribute('onclick').includes(id)) {
+        a.classList.add('active');
+      }
+    });
+
+    // Close mobile menu
+    document.getElementById('navLinks').classList.remove('open');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  function handleSubmit() {
+    const name = document.getElementById('cName').value.trim();
+    const email = document.getElementById('cEmail').value.trim();
+    const subject = document.getElementById('cSubject').value.trim();
+    const message = document.getElementById('cMessage').value.trim();
+
+    if (!name || !email || !message) {
+      alert('Please fill in your name, email, and message.');
+      return;
+    }
+
+    // Open mailto link
+    const mailto = `mailto:iftekharifty42@gmail.com?subject=${encodeURIComponent(subject || 'Website Inquiry from ' + name)}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message)}`;
+    window.location.href = mailto;
+  }
+
+  // Scroll effect for nav
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 20) {
+      nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.4)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+
+  // Animate skill bars on experience section load
+  const observer = new MutationObserver(() => {
+    const exp = document.getElementById('experience');
+    if (exp && exp.classList.contains('active')) {
+      document.querySelectorAll('.skill-fill').forEach(bar => {
+        const w = bar.style.width;
+        bar.style.width = '0';
+        setTimeout(() => { bar.style.width = w; }, 100);
+      });
+    }
+  });
+
+  observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['class'] });
+</script>
+
+</body>
+</html>
